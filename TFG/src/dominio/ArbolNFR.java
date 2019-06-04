@@ -2,6 +2,8 @@ package dominio;
 
 import java.util.LinkedList;
 
+import controlador.Controlador;
+
 public class ArbolNFR {
 
 
@@ -12,8 +14,12 @@ public class ArbolNFR {
 	}
 	
 	public void actualizarRiesgo() {
+		int sprintActual=Controlador.getUnicaInstancia().getProyecto().getNumSprint();
 		for (NFR nfr : hijos) {
-			nfr.actualizarRiesgo();
+			if(nfr.getCodigo().compareTo("REQ01")==0)
+				nfr.actualizarRiesgo(sprintActual);
+			else
+				nfr.actualizarRiesgo(sprintActual);
 		}
 	}
 

@@ -5,14 +5,27 @@ public class Proyecto {
 	private double duracionSprint;
 	private double duracionPHistoria;
 	private double horasTrabajoDía;
+	private int numSprint;
 
-	public Proyecto(double duracionSprint, double duracionPHistoria, double horasTrabajoDía) {
+	public Proyecto(double duracionSprint, double duracionPHistoria, double horasTrabajoDía, int sprint) {
 		this.duracionSprint = duracionSprint;
 		this.duracionPHistoria = duracionPHistoria;
 		this.horasTrabajoDía = horasTrabajoDía;
+		this.numSprint=sprint;
+		
 	}
 
 	
+	public int getNumSprint() {
+		return numSprint;
+	}
+
+
+	public void setNumSprint(int numSprint) {
+		this.numSprint = numSprint;
+	}
+
+
 	public double getHorasTrabajoDía() {
 		return horasTrabajoDía;
 	}

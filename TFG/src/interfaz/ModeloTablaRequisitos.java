@@ -53,4 +53,8 @@ public class ModeloTablaRequisitos extends DefaultTableModel {
 		return (String)getValueAt(row, 2);
 	}
 	
+	public boolean getIsAuditadoSeleccionado(int row){
+		return (boolean) getValueAt(row, 3);
+	}
+	
 }

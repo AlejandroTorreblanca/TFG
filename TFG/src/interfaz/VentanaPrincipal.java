@@ -57,6 +57,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	public void setPanelInicial(){
 		card.show(panelCentral, "Inicial");
+		panelInicial.actualizarPanel();
 		validate();	
 	}
 	
@@ -67,6 +68,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	public void setPanelSprint(){
 		card.show(panelCentral, "Sprint");
+		panelSprint.actualizarLista();
 		validate();	
 	}
 	

@@ -28,6 +28,10 @@ public class Controlador {
 		return unicaInstancia;
 	}
 	
+	public Proyecto getProyecto() {
+		return con.getProyecto();
+	}
+	
 	public DefaultMutableTreeNode getRequisitos() {
 		ArbolNFR arbol = con.leerArbol();
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
@@ -35,6 +39,15 @@ public class Controlador {
 			root.add(crearArbol(req));
 		}
 		return root;
+	}
+	
+	public void reiniciarProyecto() {
+		con.reiniciarProyecto();
+	}
+	
+	public void confirmarSprint(LinkedList<String> lista) {
+		con.marcarAuditados(lista);
+		con.setNumSprint(getProyecto().getNumSprint()+1);
 	}
 	
 	public DefaultMutableTreeNode crearArbol(NFR req) {

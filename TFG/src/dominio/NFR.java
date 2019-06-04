@@ -13,7 +13,7 @@ public class NFR implements Comparable{
 	private String validacion;
 	private String argumentos;
 	private int puntosHistoria;
-	private int ciclos;
+	private int ultimoCicloAudit;
 	private LinkedList<NFR> hijos;
 	private int dependencias;
 	private int nAudit;
@@ -37,7 +37,7 @@ public class NFR implements Comparable{
 		this.hijos = hijos;
 		this.dependencias = dependencias;
 		this.nAudit = nAudit;
-		this.ciclos = ciclos;
+		this.ultimoCicloAudit = ciclos;
 	}
 
 	public NFR(String codigo, String descrip, String tipo, String categoria, int importancia, String validacion,
@@ -52,7 +52,7 @@ public class NFR implements Comparable{
 		this.puntosHistoria = pHisotria;
 		this.nAudit = nAudit;
 		this.dependencias=dep;
-		this.ciclos=ciclos;
+		this.ultimoCicloAudit=ciclos;
 		this.hijos=new LinkedList<NFR>();
 	}
 	
@@ -62,34 +62,31 @@ public class NFR implements Comparable{
 		return false;
 	}
 	
-	public double calcularRiesgo() {
+	public double calcularRiesgo(int cicloActual) {
 		double riesgo=0.5*this.importancia;
-		riesgo+=0.2*(5*this.hijos.size());
+		riesgo+=0.2*(5*this.getAllHijos().size());
 		riesgo+=0.2*(2.5*this.dependencias);
-		riesgo+=0.1*this.ciclos;
+		riesgo+=0.1*(cicloActual-this.ultimoCicloAudit);
 		return riesgo/(this.nAudit+1);
 
 	}
 	
-	public double actualizarRiesgo() {
-		if(this.esHoja() || this.nAudit==0) {
-			this.riesgo=calcularRiesgo();
-			return this.riesgo;
-		}
-		else {
+	public void actualizarRiesgo(int cicloActual) {
+		this.riesgo=calcularRiesgo(cicloActual);
+		
+		if(!this.esHoja() && this.nAudit!=0){
 			for(NFR req : this.hijos) {
-				this.riesgo += (this.importancia/10)*req.actualizarRiesgo(); 
+				req.actualizarRiesgo(cicloActual); 
 			}
-			return this.riesgo;
 		}
 	}
 
 	public int getCiclos() {
-		return ciclos;
+		return ultimoCicloAudit;
 	}
 
 	public void setCiclos(int ciclos) {
-		this.ciclos = ciclos;
+		this.ultimoCicloAudit = ciclos;
 	}
 
 	public int getPuntosHistoria() {

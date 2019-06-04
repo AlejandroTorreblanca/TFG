@@ -15,10 +15,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +28,7 @@ import javax.swing.table.TableColumn;
 
 import controlador.Controlador;
 import dominio.NFR;
+import dominio.Proyecto;
 
 public class PanelSprint  extends JPanel implements ActionListener{
 	
@@ -35,11 +38,17 @@ public class PanelSprint  extends JPanel implements ActionListener{
 	private VentanaPrincipal window;
 	private Controlador controlador;
 	private ModeloTablaRequisitos modelo;
+	private JTextField textoSprint;
 	
 	public PanelSprint(VentanaPrincipal w) {
 		this.window=w;
 		this.controlador=Controlador.getUnicaInstancia();
-		LinkedList<NFR> lista = controlador.getNFRSprint();
+		
+		JLabel rotuloSprint = new JLabel("Sprint actual: ", SwingConstants.CENTER);
+		
+		textoSprint = new JTextField();
+		fixedSize(textoSprint, 40, 24);
+		textoSprint.setEditable(false);		
 		
 		modelo = new ModeloTablaRequisitos();
 		JTable tabla = new JTable(modelo);
@@ -58,21 +67,18 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		columna.setMaxWidth(75);
 		columna = tabla.getColumn("Puntos Historia");
 		columna.setMaxWidth(100);
-		int x=0;
-		for(NFR req : lista) {
-			modelo.addFila(req);
-		}
+		actualizarLista();
 		
 		marcarAllButton = new JButton("Marcar Todos");
-		marcarAllButton.setMargin(new Insets(2, 100, 2, 99));
+		marcarAllButton.setMargin(new Insets(2, 60, 2, 60));
 		marcarAllButton.addActionListener(this);
 		
-		newSprintButton = new JButton("Siguiente Sprint");
-		newSprintButton.setMargin(new Insets(2, 100, 2, 99));
+		newSprintButton = new JButton("Finalizar Sprint");
+		newSprintButton.setMargin(new Insets(2, 60, 2, 60));
 		newSprintButton.addActionListener(this);
 		
-		cancelarButton = new JButton("Cancelar");
-		cancelarButton.setMargin(new Insets(2, 100, 2, 99));
+		cancelarButton = new JButton("Volver");
+		cancelarButton.setMargin(new Insets(2, 60, 2, 60));
 		cancelarButton.addActionListener(this);
 		
 		
@@ -81,35 +87,26 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		JPanel panel1 = new JPanel();
 		JPanel panel2 = new JPanel();
 		JPanel panel3 = new JPanel();
+		JPanel panel4 = new JPanel();
 		
 		panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
 		panel1.setAlignmentX(LEFT_ALIGNMENT);
 		panel2.setAlignmentX(LEFT_ALIGNMENT);
-		panel3.setAlignmentX(CENTER_ALIGNMENT);
-		
-//		String colNames[] = { "Código", "Riesgo", "Puntos Historia", "Auditado" };
-//		Object[][] data = {};
-//		DefaultTableModel dtm;
-//		setLocation(400, 100);
-//		dtm = new DefaultTableModel(data, colNames);
-//		JTable table = new JTable(dtm);
-//		JScrollPane sp = new JScrollPane(table);
-//		TableColumn tc = table.getColumnModel().getColumn(0);
-//		tc.setCellEditor(table.getDefaultEditor(Boolean.class));
-//		tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));
-//		panel1.add(sp);
-//		for (int x = 0; x < 5; x++) {
-//			dtm.addRow(new Object[] { new Boolean(false), "Row " + (x + 1) + " Col 2", "Row " + (x + 1) + " Col 3" });
-//		}
+		panel3.setAlignmentX(LEFT_ALIGNMENT);
+		panel4.setAlignmentX(LEFT_ALIGNMENT);
 		
 		panel1.add(scrollPane);
 		panel2.add(newSprintButton);
 		panel2.add(Box.createRigidArea(new Dimension(25, 25)));
 		panel2.add(cancelarButton);
 		panel3.add(marcarAllButton);
+		panel4.add(rotuloSprint);
+		panel4.add(Box.createRigidArea(new Dimension(2, 2)));
+		panel4.add(textoSprint);
 		
 		panelCentral.add(Box.createRigidArea(new Dimension(20, 20)));
 		panelCentral.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelCentral.add(panel4);
 		panelCentral.add(panel1);
 		panelCentral.add(panel3);
 		panelCentral.add(panel2);
@@ -124,7 +121,7 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		pCentral.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pCentral.add(panelCentral);
 
-		JLabel rotuloSuperior = new JLabel("Requisitos del Proyecto", SwingConstants.CENTER);
+		JLabel rotuloSuperior = new JLabel("Requisitos del Sprint", SwingConstants.CENTER);
 		Font font = new Font("Calibri", Font.BOLD, 40);
 		rotuloSuperior.setFont(font);
 		pNorte.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -153,6 +150,16 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		add(pSur, BorderLayout.SOUTH);
 	
 	}
+	
+	public void actualizarLista() {
+		vaciarTabla();
+		LinkedList<NFR> lista = controlador.getNFRSprint();
+		Proyecto proy=controlador.getProyecto();
+		for(NFR req : lista) {
+			modelo.addFila(req);
+		}
+		textoSprint.setText(Integer.toString(proy.getNumSprint()));
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -161,9 +168,32 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		} else if (e.getSource() == cancelarButton) {
 			window.setPanelInicial();
 		} else if (e.getSource() == newSprintButton) {
-			
+			nuevoSprint();
 		}
 		
 		
 	}
+	
+	private void fixedSize(JComponent c, int x, int y) {
+		c.setMinimumSize(new Dimension(x, y));
+		c.setMaximumSize(new Dimension(x, y));
+		c.setPreferredSize(new Dimension(x, y));
+	}
+	
+	public void nuevoSprint() {
+		LinkedList<String> lista=new LinkedList<String>();
+		for (int i = 0; i < modelo.getRowCount(); i++) {
+			if(modelo.getIsAuditadoSeleccionado(i))
+				lista.add(modelo.getCodigoSeleccionado(i));
+		}
+		controlador.confirmarSprint(lista);
+		actualizarLista();
+		
+	}
+	
+	public void vaciarTabla() {
+		while (modelo.getRowCount() > 0)
+			modelo.removeRow(0);
+	}
+
 }

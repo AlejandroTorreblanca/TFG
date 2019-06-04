@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -49,11 +50,11 @@ public class PanelInicial extends JPanel implements ActionListener{
 			reiniciarButton.setEnabled(false);
 		
 		requisitosButton = new JButton("Mostrar requisitos");
-		requisitosButton.setMargin(new Insets(2, 85, 2, 80));
+		requisitosButton.setMargin(new Insets(2, 85, 2, 87));
 		requisitosButton.addActionListener(this);
 		
 		SprintButton = new JButton("Mostrar Sprint");
-		SprintButton.setMargin(new Insets(2, 80, 2, 81));
+		SprintButton.setMargin(new Insets(2, 85, 2, 110));
 		SprintButton.addActionListener(this);
 		
 		coeficientesButton = new JButton("Mantenimiento de Coeficientes");
@@ -143,6 +144,14 @@ public class PanelInicial extends JPanel implements ActionListener{
 		pSur.add(Box.createRigidArea(new Dimension(50, 50)));
 		add(pSur, BorderLayout.SOUTH);
 	}
+	
+	public void actualizarPanel() {
+		if(controlador.isProyectoIniciado()) {
+			reiniciarButton.setEnabled(true);
+		}
+		else
+			reiniciarButton.setEnabled(false);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -151,6 +160,18 @@ public class PanelInicial extends JPanel implements ActionListener{
 		}
 		else if (e.getSource()== SprintButton){
 			window.setPanelSprint();
+		}
+		else if (e.getSource()== reiniciarButton){
+			int ax = JOptionPane.showConfirmDialog(null, "Esta operación reiniciará todos los datos de auditoría del proyecto, ¿Desea continuar?");
+	        if(ax == JOptionPane.YES_OPTION)
+	        {
+	        	controlador.reiniciarProyecto();
+				reiniciarButton.setEnabled(false);
+				JOptionPane.showMessageDialog(null, "Proyecto reiniciado.");
+	        }
+	        else if(ax == JOptionPane.NO_OPTION)
+	            JOptionPane.showMessageDialog(null, "Operación cancelada.");
+			
 		}
 //		else if (e.getSource()== requisitosButton){
 //			window.setPanelMostrarRequisitos();
