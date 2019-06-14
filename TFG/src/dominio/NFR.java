@@ -224,6 +224,11 @@ public class NFR implements Comparable<Object>{
 	public void setDependencia(int dep) {
 		this.dependencias = dep;
 	}
+	
+	@Override
+	public String toString() {
+		return this.codigo;
+	}
 
 	@Override
 	public int compareTo(Object o) {

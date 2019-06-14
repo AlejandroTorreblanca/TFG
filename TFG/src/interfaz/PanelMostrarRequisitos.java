@@ -10,31 +10,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 
 import controlador.Controlador;
 import dominio.NFR;
-import dominio.Proyecto;
 
 @SuppressWarnings("serial")
 public class PanelMostrarRequisitos extends JPanel implements ActionListener, KeyListener {
@@ -46,12 +42,6 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 	private JScrollPane scrollPane;
 	private JButton confirmarButton;
 	private JButton cancelarButton;
-
-	private void fixedSize(JComponent c, int x, int y) {
-		c.setMinimumSize(new Dimension(x, y));
-		c.setMaximumSize(new Dimension(x, y));
-		c.setPreferredSize(new Dimension(x, y));
-	}
 
 	public PanelMostrarRequisitos(VentanaPrincipal w) {
 
@@ -95,7 +85,49 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 		actualizarLista();
 		
 		
-		JTree arbol= new JTree(controlador.getRequisitos());
+		JTree arbol = new JTree(controlador.getRequisitos());
+		arbol.setCellRenderer(new DefaultTreeCellRenderer() {
+			String nombre1 = "check.png";
+			String nombre2 = "cross.png";
+			String nombre3 = "red.png";
+			String nombre4 = "verde.png";
+			String nombre_im1 = System.getProperty("user.dir") + "\\" + nombre1;
+			String nombre_im2 = System.getProperty("user.dir") + "\\" + nombre2;
+			String nombre_im3 = System.getProperty("user.dir") + "\\" + nombre3;
+			String nombre_im4 = System.getProperty("user.dir") + "\\" + nombre4;
+			private Icon checkIcon = new ImageIcon(nombre_im1);
+			private Icon crossIcon = new ImageIcon(nombre_im2);
+			private Icon redIcon = new ImageIcon(nombre_im3);
+			private Icon verdeIcon = new ImageIcon(nombre_im4);
+
+			@Override
+			public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
+					boolean isLeaf, int row, boolean focused) {
+				Component c = super.getTreeCellRendererComponent(tree, value, selected, expanded, isLeaf, row, focused);
+				if (value instanceof DefaultMutableTreeNode) {
+					Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
+					if (userObject instanceof NFR ) {
+						NFR req = ((NFR) userObject);
+						if (isLeaf && req.getnAudit() > 0) {
+							setIcon(checkIcon);
+						}
+						else if (isLeaf && req.getnAudit() == 0) {
+							setIcon(crossIcon);
+						}
+						else if (!isLeaf && req.getnAudit() == 0) {
+							setIcon(redIcon);
+						}
+						else if (!isLeaf && req.getnAudit() > 0) {
+							setIcon(verdeIcon);
+						}
+							
+						
+					}
+				}
+				return c;
+			}
+		});
+
 		arbol.setRootVisible(false);
 		scrollPane= new JScrollPane(arbol);
 		scrollPane.setPreferredSize(new Dimension(250, 400));

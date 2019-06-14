@@ -3,10 +3,8 @@ package interfaz;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.util.Arrays;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;

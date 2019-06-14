@@ -77,7 +77,6 @@ public class PanelInicial extends JPanel implements ActionListener{
 		JPanel pEste = new JPanel();
 		JPanel pCentro = new JPanel();
 		JPanel pSur = new JPanel();
-		JPanel pOeste = new JPanel();
 		JPanel pCentral = new JPanel();
 		
 		JLabel rotuloSuperior = new JLabel("SCRUM+AUDIT", SwingConstants.CENTER);

@@ -1,7 +1,5 @@
 package controlador;
 
-import java.sql.SQLException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -53,11 +51,11 @@ public class Controlador {
 	public DefaultMutableTreeNode crearArbol(NFR req) {
 		LinkedList<NFR> lista = req.getHijos();
 		if(lista.isEmpty()) {
-			return new DefaultMutableTreeNode(req.getCodigo());
+			return new DefaultMutableTreeNode(req);
 		}
 		else
 		{
-			DefaultMutableTreeNode root = new DefaultMutableTreeNode(req.getCodigo());
+			DefaultMutableTreeNode root = new DefaultMutableTreeNode(req);
 			for(NFR nfr : lista) {
 				root.add(crearArbol(nfr));
 			}
@@ -68,7 +66,6 @@ public class Controlador {
 		return con.isIniciado();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public LinkedList<NFR> getListaOrdenadaNFR(){
 		ArbolNFR arbol =con.leerArbol();
 		arbol.actualizarRiesgo();

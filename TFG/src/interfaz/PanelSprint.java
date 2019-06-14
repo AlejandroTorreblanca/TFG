@@ -29,6 +29,7 @@ import controlador.Controlador;
 import dominio.NFR;
 import dominio.Proyecto;
 
+@SuppressWarnings("serial")
 public class PanelSprint  extends JPanel implements ActionListener{
 	
 	private JButton cancelarButton;
@@ -202,6 +203,7 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		for (int i = 0; i < modelo.getRowCount(); i++) {
 			if(modelo.getIsAuditadoSeleccionado(i))
 				lista.add(modelo.getCodigoSeleccionado(i));
+			System.out.println(modelo.getCodigoSeleccionado(i));
 		}
 		controlador.confirmarSprint(lista);
 		actualizarLista();

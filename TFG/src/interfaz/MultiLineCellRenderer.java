@@ -2,14 +2,13 @@ package interfaz;
 
 import java.awt.Component;
 
-import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
+@SuppressWarnings("serial")
 class MultiLineCellRenderer extends JTextArea implements TableCellRenderer {
 
 	  public MultiLineCellRenderer() {

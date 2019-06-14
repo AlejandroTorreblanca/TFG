@@ -1,34 +1,25 @@
 package persistencia;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import controlador.Controlador;
 import dominio.ArbolNFR;
 import dominio.NFR;
 import dominio.Proyecto;
-import interfaz.PanelMensaje;
 
 public class Connect {
 
@@ -259,6 +250,7 @@ public class Connect {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void marcarAuditados(LinkedList<String> lista) {
 		LinkedList<String> copia=(LinkedList<String>) lista.clone();
 		DataFormatter dataFormatter = new DataFormatter();
