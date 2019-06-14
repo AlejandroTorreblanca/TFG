@@ -50,5 +50,17 @@ public class ArbolNFR {
 		this.hijos = hijos;
 	}
 	
+	public void marcarAuditados(LinkedList<String> lista) {
+		for(NFR req : this.hijos) {
+			for(String nombre: lista)
+				req.marcarAuditoria(nombre);
+		}
+	}
+	
+	public void reiniciarRequisitos() {
+		for(NFR req : this.hijos) {
+			req.reiniciar();
+		}
+	}
 	
 }

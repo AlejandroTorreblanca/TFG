@@ -223,6 +223,7 @@ public class Connect {
 			libro.close();
 			this.iniciado = -1;
 			this.proyecto.setNumSprint(0);
+			arbol.reiniciarRequisitos();
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -259,7 +260,7 @@ public class Connect {
 	}
 
 	public void marcarAuditados(LinkedList<String> lista) {
-
+		LinkedList<String> copia=(LinkedList<String>) lista.clone();
 		DataFormatter dataFormatter = new DataFormatter();
 		Proyecto proyecto = getProyecto();
 		int cicloActual = proyecto.getNumSprint();
@@ -294,6 +295,7 @@ public class Connect {
 			archivoInput.close();
 			libro.close();
 			this.iniciado=1;
+			arbol.marcarAuditados(copia);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

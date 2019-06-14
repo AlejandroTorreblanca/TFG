@@ -63,9 +63,9 @@ public class NFR implements Comparable<Object>{
 	
 	public double calcularRiesgo(int cicloActual) {
 		double riesgo=0.5*this.importancia;
-		riesgo+=0.2*(5*this.getAllHijos().size());
-		riesgo+=0.2*(2.5*this.dependencias);
-		riesgo+=0.1*(cicloActual-this.ultimoCicloAudit);
+		riesgo+=0.2*(20*this.getAllHijos().size());
+		riesgo+=0.2*(10*this.dependencias);
+		riesgo+=0.1*(10*cicloActual-this.ultimoCicloAudit);
 		return riesgo/(this.nAudit+1);
 
 	}
@@ -77,6 +77,24 @@ public class NFR implements Comparable<Object>{
 			for(NFR req : this.hijos) {
 				req.actualizarRiesgo(cicloActual); 
 			}
+		}
+	}
+	
+	public void marcarAuditoria(String nombre) {
+		if(this.getCodigo().compareTo(nombre)==0) {
+			this.nAudit++;
+		}
+		else {
+			for(NFR req : hijos) {
+				req.marcarAuditoria(nombre);
+			}
+		}
+	}
+	
+	public void reiniciar() {
+		this.nAudit=0;
+		for(NFR req : hijos) {
+			req.reiniciar();
 		}
 	}
 

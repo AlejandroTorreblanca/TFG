@@ -3,8 +3,10 @@ package interfaz;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.Arrays;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -50,6 +52,7 @@ public class VentanaPrincipal extends JFrame {
 	
 	public void setPanelMostrarRequisitos(){
 		card.show(panelCentral, "Requisitos");
+		panelRequisitos.actualizarLista();
 		validate();	
 	}
 	
@@ -92,6 +95,7 @@ public class VentanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					window = new VentanaPrincipal();
 					window.setVisible(true);
 					

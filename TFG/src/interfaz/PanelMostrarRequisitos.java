@@ -72,7 +72,7 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 		tabla.setRowHeight(tabla.getRowHeight() * 4);
 		
 		JScrollPane scrollPanel = new JScrollPane(tabla);
-		scrollPanel.setPreferredSize(new Dimension(700, 500));
+		scrollPanel.setPreferredSize(new Dimension(700, 400));
 		tabla.setCellSelectionEnabled(false);
 		tabla.setRowSelectionAllowed(true);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -81,7 +81,6 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 		tc = tabla.getColumnModel().getColumn(2);
 		tc.setCellRenderer(new MultiLineCellRenderer());
 		TableColumn columna = tabla.getColumn("Código");
-		
 		columna.setMinWidth(60);
 		columna.setMaxWidth(60);
 		columna = tabla.getColumn("Riesgo");
@@ -91,15 +90,17 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 		columna.setMinWidth(60);
 		columna.setMaxWidth(60);
 		columna = tabla.getColumn("Nº Auditado");
-		columna.setMinWidth(300);
-		columna.setMaxWidth(300);
+		columna.setMinWidth(60);
+		columna.setMaxWidth(60);
 		actualizarLista();
 		
 		
 		JTree arbol= new JTree(controlador.getRequisitos());
 		arbol.setRootVisible(false);
 		scrollPane= new JScrollPane(arbol);
-		scrollPane.setPreferredSize(new Dimension(250, 500));
+		scrollPane.setPreferredSize(new Dimension(250, 400));
+		panel1.add(Box.createRigidArea(new Dimension(50, 15)));
+		panel1.add(scrollPanel);
 		panel1.add(Box.createRigidArea(new Dimension(50, 15)));
 		panel1.add(scrollPane);
 
@@ -130,6 +131,8 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 		JLabel rotuloSuperior = new JLabel("Requisitos del Proyecto", SwingConstants.CENTER);
 		Font font = new Font("Calibri", Font.BOLD, 40);
 		rotuloSuperior.setFont(font);
+		Color c= new Color(98, 2, 174);
+		rotuloSuperior.setForeground(c);
 		pNorte.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pNorte.add(rotuloSuperior);
 		pNorte.setBorder(BorderFactory.createLineBorder(Color.black));

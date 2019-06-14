@@ -83,6 +83,8 @@ public class PanelInicial extends JPanel implements ActionListener{
 		JLabel rotuloSuperior = new JLabel("SCRUM+AUDIT", SwingConstants.CENTER);
 		Font font = new Font("Calibri", Font.BOLD, 40);
 		rotuloSuperior.setFont(font);
+		Color c= new Color(98, 2, 174);
+		rotuloSuperior.setForeground(c);
 		pNorte.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pNorte.setMaximumSize(new Dimension(700, 100));
 		pNorte.add(rotuloSuperior);
@@ -97,45 +99,26 @@ public class PanelInicial extends JPanel implements ActionListener{
 		pCentro.add(Box.createRigidArea(new Dimension(15, 15)));
 		pCentro.add(SprintButton); 
 		pCentro.add(Box.createRigidArea(new Dimension(15, 15)));
-//		pCentro.add(coeficientesButton); 
-//		pCentro.add(Box.createRigidArea(new Dimension(15, 15)));
-//		pCentro.add(movimientosButton); 
-//		pCentro.add(Box.createRigidArea(new Dimension(15, 15)));
-//		pCentro.add(consultaMovButton);
-//		pCentro.add(Box.createRigidArea(new Dimension(15, 15)));
-//		pCentro.add(consultaProyecButton);
 		
 		JPanel pCentralaux = new JPanel();
 		pCentralaux.setLayout(new BoxLayout(pCentralaux, BoxLayout.X_AXIS));
 		JLabel imagen=new JLabel();
-		imagen.setMaximumSize(new Dimension(500, 333));
-		String nombre="scrum.png";
+		imagen.setMaximumSize(new Dimension(450, 450));
+		String nombre="logo.png";
 		String nombre_im=System.getProperty("user.dir")+"\\"+nombre;
 		imagen.setIcon(new ImageIcon(nombre_im));
 		pCentralaux.add(pCentro);
 		pCentralaux.add(Box.createRigidArea(new Dimension(50, 50)));
-//		pCentralaux.add(imagen);
+		pCentralaux.add(imagen);
 		
 		pCentral.setLayout(new BoxLayout(pCentral, BoxLayout.Y_AXIS));
 		pCentral.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pCentral.setAlignmentY(Component.CENTER_ALIGNMENT);
-		pCentral.add(Box.createRigidArea(new Dimension(150, 150)));
+		pCentral.add(Box.createRigidArea(new Dimension(50, 50)));
 		pCentral.add(pCentralaux);
 		
 		setLayout(new BorderLayout(10, 10));
 		add(pNorte, BorderLayout.NORTH);
-
-		JLabel logo=new JLabel();
-		logo.setMaximumSize(new Dimension(80, 74));
-		nombre="logo.png";
-		nombre_im=System.getProperty("user.dir")+"\\"+nombre;
-//		logo.setIcon(new ImageIcon(nombre_im));
-		pOeste.setLayout(new BoxLayout(pOeste, BoxLayout.Y_AXIS));
-		pOeste.setAlignmentY(Component.LEFT_ALIGNMENT);
-//		pOeste.add(logo);
-		pOeste.add(Box.createRigidArea(new Dimension(25, 200)));
-		add(pOeste, BorderLayout.WEST);
-		
 		add(pCentral,BorderLayout.CENTER);
 		
 		pEste.add(Box.createRigidArea(new Dimension(100, 100)));
@@ -173,23 +156,5 @@ public class PanelInicial extends JPanel implements ActionListener{
 	            JOptionPane.showMessageDialog(null, "Operación cancelada.");
 			
 		}
-//		else if (e.getSource()== requisitosButton){
-//			window.setPanelMostrarRequisitos();
-//		}
-//		else if (e.getSource()== SprintButton){
-//			window.setPanelCoenceptos();
-//		}
-//		else if (e.getSource()== coeficientesButton){
-//			window.setPanelCoeficientes();
-//		}
-//		else if (e.getSource()== movimientosButton){
-//			window.setPanelMovimientos();
-//		}
-//		else if (e.getSource()== consultaMovButton){
-//			window.setPanelConsultaMovimientos();
-//		}
-//		else if (e.getSource()== consultaProyecButton){
-//			window.setPanelConsultaProyectos();
-//		}
 	}
 }

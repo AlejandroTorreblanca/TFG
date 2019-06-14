@@ -23,7 +23,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import controlador.Controlador;
@@ -138,6 +137,8 @@ public class PanelSprint  extends JPanel implements ActionListener{
 
 		JLabel rotuloSuperior = new JLabel("Requisitos del Sprint", SwingConstants.CENTER);
 		Font font = new Font("Calibri", Font.BOLD, 40);
+		Color c= new Color(98, 2, 174);
+		rotuloSuperior.setForeground(c);
 		rotuloSuperior.setFont(font);
 		pNorte.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pNorte.add(rotuloSuperior);
