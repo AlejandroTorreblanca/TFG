@@ -16,10 +16,7 @@ public class ArbolNFR {
 	public void actualizarRiesgo() {
 		int sprintActual=Controlador.getUnicaInstancia().getProyecto().getNumSprint();
 		for (NFR nfr : hijos) {
-			if(nfr.getCodigo().compareTo("REQ01")==0)
-				nfr.actualizarRiesgo(sprintActual);
-			else
-				nfr.actualizarRiesgo(sprintActual);
+			nfr.actualizarRiesgo(sprintActual);
 		}
 	}
 

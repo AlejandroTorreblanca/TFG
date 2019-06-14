@@ -91,6 +91,10 @@ public class Controlador {
 		return lista;
 	}
 	
+	public LinkedList<NFR> getNFRs(){
+		return  this.getListaOrdenadaNFR();
+	}
+	
 	public double getDuracSprint() {
 		return con.getProyecto().getDuracionSprint();
 	}

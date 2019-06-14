@@ -1,9 +1,8 @@
 package dominio;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class NFR implements Comparable{
+public class NFR implements Comparable<Object>{
 
 	private String codigo;
 	private String descrip;
@@ -40,7 +39,7 @@ public class NFR implements Comparable{
 		this.ultimoCicloAudit = ciclos;
 	}
 
-	public NFR(String codigo, String descrip, String tipo, String categoria, int importancia, String validacion,
+	public NFR(String codigo,String tipo,String categoria, String descrip, int importancia, String validacion,
 			String argumentos, int pHisotria,int dep, int nAudit, int ciclos) {
 		this.codigo = codigo;
 		this.descrip = descrip;

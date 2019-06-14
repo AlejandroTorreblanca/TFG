@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -32,16 +33,16 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
 import controlador.Controlador;
+import dominio.NFR;
+import dominio.Proyecto;
 
 @SuppressWarnings("serial")
 public class PanelMostrarRequisitos extends JPanel implements ActionListener, KeyListener {
 
 	private VentanaPrincipal window;
 	private Controlador controlador;
-	private JTextField textoCD;
-	private JTextField textoDescrip;
-	private JTextField textoPrecio;
 	private JTable tabla;
+	private ModeloTablaMostrarRequisitos modelo;
 	private JScrollPane scrollPane;
 	private JButton confirmarButton;
 	private JButton cancelarButton;
@@ -65,11 +66,40 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 		JPanel panel1 = new JPanel();
 		JPanel panel2 = new JPanel();
 		
+		modelo = new ModeloTablaMostrarRequisitos();
+		tabla = new JTable(modelo);
+		tabla.setFillsViewportHeight(true);
+		tabla.setRowHeight(tabla.getRowHeight() * 4);
+		
+		JScrollPane scrollPanel = new JScrollPane(tabla);
+		scrollPanel.setPreferredSize(new Dimension(700, 500));
+		tabla.setCellSelectionEnabled(false);
+		tabla.setRowSelectionAllowed(true);
+		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		TableColumn tc = tabla.getColumnModel().getColumn(4);
+		tc = tabla.getColumnModel().getColumn(2);
+		tc.setCellRenderer(new MultiLineCellRenderer());
+		TableColumn columna = tabla.getColumn("Código");
+		
+		columna.setMinWidth(60);
+		columna.setMaxWidth(60);
+		columna = tabla.getColumn("Riesgo");
+		columna.setMinWidth(50);
+		columna.setMaxWidth(50);
+		columna = tabla.getColumn("Import.");
+		columna.setMinWidth(60);
+		columna.setMaxWidth(60);
+		columna = tabla.getColumn("Nº Auditado");
+		columna.setMinWidth(300);
+		columna.setMaxWidth(300);
+		actualizarLista();
+		
 		
 		JTree arbol= new JTree(controlador.getRequisitos());
 		arbol.setRootVisible(false);
 		scrollPane= new JScrollPane(arbol);
-		scrollPane.setPreferredSize(new Dimension(450, 400));
+		scrollPane.setPreferredSize(new Dimension(250, 500));
 		panel1.add(Box.createRigidArea(new Dimension(50, 15)));
 		panel1.add(scrollPane);
 
@@ -135,6 +165,19 @@ public class PanelMostrarRequisitos extends JPanel implements ActionListener, Ke
 		} catch (NumberFormatException excepcion) {
 			return false;
 		}
+	}
+	
+	public void actualizarLista() {
+		vaciarTabla();
+		LinkedList<NFR> lista = controlador.getNFRs();
+		for(NFR req : lista) {
+			modelo.addFila(req);
+		}
+	}
+	
+	public void vaciarTabla() {
+		while (modelo.getRowCount() > 0)
+			modelo.removeRow(0);
 	}
 
 

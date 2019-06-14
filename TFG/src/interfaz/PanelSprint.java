@@ -39,6 +39,7 @@ public class PanelSprint  extends JPanel implements ActionListener{
 	private Controlador controlador;
 	private ModeloTablaRequisitos modelo;
 	private JTextField textoSprint;
+	private JTable tabla;
 	
 	public PanelSprint(VentanaPrincipal w) {
 		this.window=w;
@@ -51,22 +52,36 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		textoSprint.setEditable(false);		
 		
 		modelo = new ModeloTablaRequisitos();
-		JTable tabla = new JTable(modelo);
+		tabla = new JTable(modelo);
 		tabla.setFillsViewportHeight(true);
+		tabla.setRowHeight(tabla.getRowHeight() * 4);
+		
 		JScrollPane scrollPane = new JScrollPane(tabla);
-		scrollPane.setPreferredSize(new Dimension(400, 300));
+		scrollPane.setPreferredSize(new Dimension(1100, 300));
 		tabla.setCellSelectionEnabled(false);
 		tabla.setRowSelectionAllowed(true);
 		tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		TableColumn columna = tabla.getColumn("Código");
-		TableColumn tc = tabla.getColumnModel().getColumn(3);
+		
+		TableColumn tc = tabla.getColumnModel().getColumn(4);
 		tc.setCellEditor(tabla.getDefaultEditor(Boolean.class));
 		tc.setCellRenderer(tabla.getDefaultRenderer(Boolean.class));
-		columna.setMaxWidth(100);
-		columna = tabla.getColumn("Riesgo");
-		columna.setMaxWidth(75);
-		columna = tabla.getColumn("Puntos Historia");
-		columna.setMaxWidth(100);
+		tc = tabla.getColumnModel().getColumn(1);
+		tc.setCellRenderer(new MultiLineCellRenderer());
+		tc = tabla.getColumnModel().getColumn(2);
+		tc.setCellRenderer(new MultiLineCellRenderer());
+		TableColumn columna = tabla.getColumn("Código");
+		
+		columna.setMinWidth(60);
+		columna.setMaxWidth(60);
+		columna = tabla.getColumn("P.H.");
+		columna.setMinWidth(50);
+		columna.setMaxWidth(50);
+		columna = tabla.getColumn("Auditado");
+		columna.setMinWidth(60);
+		columna.setMaxWidth(60);
+		columna = tabla.getColumn("Validación");
+		columna.setMinWidth(300);
+		columna.setMaxWidth(300);
 		actualizarLista();
 		
 		marcarAllButton = new JButton("Marcar Todos");
@@ -159,6 +174,7 @@ public class PanelSprint  extends JPanel implements ActionListener{
 			modelo.addFila(req);
 		}
 		textoSprint.setText(Integer.toString(proy.getNumSprint()));
+		
 	}
 
 	@Override
@@ -190,6 +206,7 @@ public class PanelSprint  extends JPanel implements ActionListener{
 		actualizarLista();
 		
 	}
+	
 	
 	public void vaciarTabla() {
 		while (modelo.getRowCount() > 0)
